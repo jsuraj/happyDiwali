@@ -246,3 +246,31 @@ function onLoad() {
 	closeButton.addEventListener('touchstart', handleCloseClick);
 	closeButton.addEventListener('touchend', handleCloseClick);
 }
+
+function checkSupport() {
+    try {
+        if (typeof WebAssembly === "object"
+            && typeof WebAssembly.instantiate === "function") {
+            const module = new WebAssembly.Module(Uint8Array.of(0x0, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00));
+            if (module instanceof WebAssembly.Module)
+                return new WebAssembly.Instance(module) instanceof WebAssembly.Instance;
+        }
+    } catch (e) {
+    }
+    return false;
+}
+
+var is_supported = checkSupport();
+if (is_supported === true) {
+	gtag('event', 'support-check', {
+		'event_category': 'webassembly',
+		'event_label': 'is-supported',
+		'value': 1,
+	  });
+} else {
+	gtag('event', 'support-check', {
+		'event_category': 'webassembly',
+		'event_label': 'is-supported',
+		'value': 0,
+	  });
+}
