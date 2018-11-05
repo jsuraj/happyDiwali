@@ -156,10 +156,10 @@ function draw() {
 			fireworks.splice(i, 1);
 		}
 	}
-	var fps = frameRate();
+	// var fps = frameRate();
 	fill(255);
 	stroke(0);
-	text("FPS: " + fps.toFixed(2), 10, height - 10);
+	// text("FPS: " + fps.toFixed(2), 10, height - 10);
 }
 
 
@@ -208,16 +208,6 @@ function addListeners(senderNameField, viewUrlButton) {
 	});
 	viewUrlButton.addEventListener('click', handleViewUrl);
 	viewUrlButton.addEventListener('touchstart', handleViewUrl);
-	// viewUrlButton.onclick = viewUrlButton.ontouchstart = function() {
-	//   var rawInput = window.senderNameText.trim();
-	//   window.senderNameText = rawInput.split(' ').join('-');
-	//   window.createdUrl = `${window.location.origin}/?n=${window.senderNameText}`
-	//   localStorage.setItem('shareUrl', window.createdUrl);
-	//   dialog.close();
-	//   createButton.style.display = "block";
-	//   shareButton.style.display = "block";
-	//   window.location.replace(window.createdUrl);
-	// }
 }
 
 function onLoad() {
@@ -226,10 +216,6 @@ function onLoad() {
 	createButton = document.querySelector('.create-button');
 	shareButton = document.querySelector('.share-button');
 	closeButton= document.querySelector('#close-button');
-
-	// document.querySelector('#share-redirect').addEventListener('click', redirect);
-	// document.querySelector('#share-redirect').addEventListener('touchstart', redirect);
-	// document.querySelector('#share-redirect').addEventListener('touchend', redirect);
 
 	createButton.addEventListener('click', handleCreateClick);
 	createButton.addEventListener('touchstart', handleCreateClick);
