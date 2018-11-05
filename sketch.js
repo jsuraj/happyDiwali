@@ -1,3 +1,15 @@
+var createButton, dialog, shareButton;
+var senderNameField, viewUrlButton;
+
+function getNameFromUrlVars() {
+	var vars = {};
+	var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+		vars[key] = value;
+	});
+	let name = (Object.keys(vars).length > 0 && vars.n !== undefined) ? vars.n.split('-').join(' ') : '';
+	return name;
+  }
+
 function Particle(x, y, col, firework) {
 	this.pos = createVector(x, y);
 	this.firework = firework;
@@ -101,6 +113,7 @@ var fireworks = [];
 var gravity;
 var rocketSound, explosionSound;
 var roboto;
+var senderName, from;
 
 function preload() {
 	rocketSound = loadSound("sounds/Bottle-Rocket.mp3");
@@ -109,6 +122,8 @@ function preload() {
 }
 
 function setup() {
+	senderName = getNameFromUrlVars();
+	from = (senderName!== '') ? 'FROM' : '';
 	createCanvas(windowWidth, windowHeight);							//windowWidth works over displayWidth
 	gravity = createVector(0, 0.2);
 	colorMode(RGB);
@@ -124,12 +139,13 @@ function setup() {
 function draw() {
 	background(0, 25);
 	fill(211, 84, 0);
-	textSize(25);
-	text('Wish you a very', windowWidth/2, windowHeight/3);
-	textSize(35);
-	text('HAPPY DIWALI', windowWidth/2, windowHeight/2)
-	textSize(20);
-	text('Suraj Jagtap', windowWidth/2 , (windowHeight*4)/5);
+    text('Wish you a very', windowWidth/2, windowHeight/4);
+    textSize(35);
+    text('HAPPY DIWALI', windowWidth/2, windowHeight/2);
+    textSize(20);
+    text(from, windowWidth/2, (windowHeight*5)/8);
+    textSize(30);
+    text(senderName, windowWidth/2 , (windowHeight*6)/8);
 	if(random(1) < 0.03) {
 		fireworks.push(new Firework());
 	}
@@ -141,8 +157,68 @@ function draw() {
 		}
 		// console.log(fireworks.length);
 	}
-	// var fps = frameRate();
+	var fps = frameRate();
 	fill(255);
 	stroke(0);
-	// text("FPS: " + fps.toFixed(2), 10, height - 10);
+	text("FPS: " + fps.toFixed(2), 10, height - 10);
+}
+
+// function redirect() {
+// 	window.location.href = '/share.html';
+// }
+
+window.addEventListener('load', onLoad);
+
+function handleCreateClick() {
+	// alert('handlecreateclick: called');
+	createButton.style.display = "none";
+	shareButton.style.display = "none";
+	dialog.open();
+	senderNameField = new mdc.textField.MDCTextField(document.querySelector('#senderName'));
+	viewUrlButton = document.querySelector('#view-url-button');
+	addListeners(senderNameField, viewUrlButton);
+}
+
+function addListeners(senderNameField, viewUrlButton) {
+	console.log(senderNameField);
+	console.log(senderNameField.input_);
+	senderNameField.input_.addEventListener('paste', function(evt) {
+	  evt.preventDefault();
+	});
+	senderNameField.input_.addEventListener('input', function(evt) {
+	  let x = evt.data;
+	  let code = x.charCodeAt(x.length -1);
+	  console.log(code);
+	  if ((code >= 65 && code <= 90) || (code >=97 && code <= 122) || code == 32) {
+		window.senderNameText = evt.target.value;
+	  } else {
+		senderNameField.input_.value = evt.target.value.slice(0, -1);
+		window.senderNameText = senderNameField.input_.value;
+	  }
+	});
+	viewUrlButton.onclick = viewUrlButton.ontouchstart = function() {
+	  var rawInput = window.senderNameText.trim();
+	  window.senderNameText = rawInput.split(' ').join('-');
+	  window.createdUrl = `${window.location.origin}/?n=${window.senderNameText}`
+	  localStorage.setItem('shareUrl', window.createdUrl);
+	  dialog.close();
+	  createButton.style.display = "block";
+	  shareButton.style.display = "block";
+	  window.location.replace(window.createdUrl);
+	}
+}
+
+function onLoad() {
+	mdc.ripple.MDCRipple.attachTo(document.querySelector('.create-button'));
+	dialog = new mdc.dialog.MDCDialog(document.querySelector('.mdc-dialog'));
+	createButton = document.querySelector('.create-button');
+	shareButton = document.querySelector('.share-button');
+
+	// document.querySelector('#share-redirect').addEventListener('click', redirect);
+	// document.querySelector('#share-redirect').addEventListener('touchstart', redirect);
+	// document.querySelector('#share-redirect').addEventListener('touchend', redirect);
+
+	createButton.addEventListener('click', handleCreateClick);
+	createButton.addEventListener('touchstart', handleCreateClick);
+
 }

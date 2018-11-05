@@ -1,0 +1,32 @@
+.create-button {
+    z-index: 20;
+    width: 150px;
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    margin-left: -75px;
+    text-transform: none;
+    border-color: #ffffff !important;
+    color: #ffffff !important;
+}
+
+.share-redirect {
+    z-index: 20;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    bottom: 25px;
+    left: 75%;
+    color: #ffffff !important;
+}
+
+.share-button {
+    z-index: 20;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    bottom: 25px;
+    left: 75%;
+    color: #ffffff;
+    z-index: 200;
+}

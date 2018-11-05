@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+        <title>Happy Diwali</title>
+        <style> body {padding: 0; margin: 0;} </style>
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <input id="share-button" class='share-button mdc-button mdc-button--outlined' type="button" value="Share" />
+        </div>
+        <div class="instructions">
+            Click share button to share your created link.
+            <br />
+            If no popup is displayed you can share the link in the address bar.
+        </div>
+    <script>
+        async function testWebShare() {
+            console.log('share: clicked');
+            try {
+                await navigator.share({
+                    title: 'Title',
+                    text: 'Sample text',
+                    url: window.location.href,
+                });
+            } catch(error) {
+                console.log('share failed:',error);
+            }
+        }
+        function onLoad() {
+            console.log('onload');
+            document.querySelector('#share-button').addEventListener('click', testWebShare);
+            document.querySelector('#share-button').addEventListener('touchstart', testWebShare);
+            document.querySelector('#share-button').addEventListener('touchend', testWebShare);
+        }
+        window.addEventListener('load', onLoad);
+        </script>
+        <link rel="stylesheet" type="text/css" href="share.css">
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+        <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    </body>
+</html>
