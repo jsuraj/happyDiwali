@@ -179,6 +179,17 @@ function handleCreateClick() {
 	addListeners(senderNameField, viewUrlButton);
 }
 
+function handleViewUrl() {
+	var rawInput = window.senderNameText.trim();
+	window.senderNameText = rawInput.split(' ').join('-');
+	window.createdUrl = `${window.location.origin}/?n=${window.senderNameText}`
+	localStorage.setItem('shareUrl', window.createdUrl);
+	dialog.close();
+	createButton.style.display = "block";
+	shareButton.style.display = "block";
+	window.location.replace(window.createdUrl);
+}
+
 function addListeners(senderNameField, viewUrlButton) {
 	console.log(senderNameField);
 	console.log(senderNameField.input_);
@@ -186,26 +197,28 @@ function addListeners(senderNameField, viewUrlButton) {
 	  evt.preventDefault();
 	});
 	senderNameField.input_.addEventListener('input', function(evt) {
-	  let x = evt.data;
+	  let x = evt.target.value;
 	  let code = x.charCodeAt(x.length -1);
 	  console.log(code);
-	  if ((code >= 65 && code <= 90) || (code >=97 && code <= 122) || code == 32) {
+	  if ((code >= 65 && code <= 90) || (code >=97 && code <= 122) || code == 32 || x.length >= 30) {
 		window.senderNameText = evt.target.value;
 	  } else {
 		senderNameField.input_.value = evt.target.value.slice(0, -1);
 		window.senderNameText = senderNameField.input_.value;
 	  }
 	});
-	viewUrlButton.onclick = viewUrlButton.ontouchstart = function() {
-	  var rawInput = window.senderNameText.trim();
-	  window.senderNameText = rawInput.split(' ').join('-');
-	  window.createdUrl = `${window.location.origin}/?n=${window.senderNameText}`
-	  localStorage.setItem('shareUrl', window.createdUrl);
-	  dialog.close();
-	  createButton.style.display = "block";
-	  shareButton.style.display = "block";
-	  window.location.replace(window.createdUrl);
-	}
+	viewUrlButton.addEventListener('click', handleViewUrl);
+	viewUrlButton.addEventListener('touchstart', handleViewUrl);
+	// viewUrlButton.onclick = viewUrlButton.ontouchstart = function() {
+	//   var rawInput = window.senderNameText.trim();
+	//   window.senderNameText = rawInput.split(' ').join('-');
+	//   window.createdUrl = `${window.location.origin}/?n=${window.senderNameText}`
+	//   localStorage.setItem('shareUrl', window.createdUrl);
+	//   dialog.close();
+	//   createButton.style.display = "block";
+	//   shareButton.style.display = "block";
+	//   window.location.replace(window.createdUrl);
+	// }
 }
 
 function onLoad() {
