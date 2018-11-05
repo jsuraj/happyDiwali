@@ -1,17 +1,74 @@
 <html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0">
-  <title>Happy Diwali</title>
-  <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
-  <!-- uncomment lines below to include extra p5 libraries -->
-  <!--<script language="javascript" src="libraries/p5.dom.js"></script>-->
-  <script language="javascript" src="libraries/p5.sound.js"></script>
-  <script language="javascript" type="text/javascript" src="sketch.js"></script>
-  <!-- this line removes any default padding and style. you might only need one of these values set. -->
-  <style> body {padding: 0; margin: 0;} </style>
-</head>
-
-<body>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+    <title>Happy Diwali</title>
+    <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+    <!-- <script language="javascript" type="text/javscript" src="libraries/p5.dom.js"></script> -->
+    <script language="javascript" src="libraries/p5.sound.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- this line removes any default padding and style. you might only need one of these values set. -->
+    <style> body {padding: 0; margin: 0;} </style>
+  </head>
+  <body>
+    <div id="p5_loading" style="display: block; position: relative; top: 50%; left: 50%; transform: translate(-50px, -50%);">
+      Loading the experience...
+    </div>
+    <div class="mdc-dialog"
+      role="alertdialog"
+      aria-modal="true"
+      aria-labelledby="my-dialog-title"
+      aria-describedby="my-dialog-content">
+        <div class="mdc-dialog__container">
+        <div class="mdc-dialog__surface">
+          <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
+          <h2 class="mdc-dialog__title" id="my-dialog-title">
+            Personalize your message</h2>
+          <div class="mdc-dialog__content" id="my-dialog-content">
+            <form>
+            <div id='senderName' class="mdc-text-field">
+              <input type="text" id="my-text-field" class="mdc-text-field__input" pattern="[A-Za-z\s]+">
+              <label class="mdc-floating-label" for="my-text-field">Please enter your name</label>
+              <div class="mdc-line-ripple"></div>
+            </div>
+          </div>
+          <footer class="mdc-dialog__actions">
+            <button type="button" id='close-button' class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">Cancel</button>
+            <button type="button" id='view-url-button' class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">View</button>
+          </footer>
+        </form>
+        </div>
+      </div>
+      <div class="mdc-dialog__scrim"></div>
+    </div>
+    <button class="create-button mdc-button mdc-button--outlined">Create yours</button>
+    <button id='share-button' class="share-button mdc-icon-button material-icons">
+        <i class="material-icons mdc-icon-button__icon">share_border</i>
+    </button>
+    <script>
+        async function testWebShare() {
+            console.log('share: clicked');
+            try {
+                await navigator.share({
+                    title: 'Title',
+                    text: 'Sample text',
+                    url: window.location.href,
+                });
+            } catch(error) {
+                console.log('share failed:',error);
+            }
+        }
+        function onLoad() {
+            console.log('onload');
+            document.querySelector('#share-button').addEventListener('click', testWebShare);
+            document.querySelector('#share-button').addEventListener('touchstart', testWebShare);
+            document.querySelector('#share-button').addEventListener('touchend', testWebShare);
+        }
+        window.addEventListener('load', onLoad);
+        </script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script language="javascript" type="text/javascript" src="sketch.js"></script>
+  </body>
 </html>
