@@ -6,8 +6,8 @@
     left: 50%;
     margin-left: -75px;
     text-transform: none;
-    border-color: #ffffff !important;
-    color: #ffffff !important;
+    border-color: #ff6f00 !important;
+    color: #ff6f00 !important;
 }
 
 .share-redirect {
@@ -29,4 +29,16 @@
     left: 75%;
     color: #ffffff;
     z-index: 200;
+}
+
+.mdc-floating-label {
+    color: #ff6f00 !important;
+}
+
+.mdc-dialog__button {
+    color: #ff6f00 !important;
+}
+
+.mdc-line-ripple {
+    background-color: #ff6f00 !important;
 }

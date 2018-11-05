@@ -11,7 +11,7 @@
     <style> body {padding: 0; margin: 0;} </style>
   </head>
   <body>
-    <div id="p5_loading" style="display: block; position: relative; top: 50%; left: 50%; transform: translate(-50px, -50%);">
+    <div id="p5_loading" style="display: block; position: relative; width: 200px; top: 50%; left: 50%; transform: translate(-100px, -50%);">
       Loading the experience...
     </div>
     <div class="mdc-dialog"
@@ -27,7 +27,7 @@
           <div class="mdc-dialog__content" id="my-dialog-content">
             <form>
             <div id='senderName' class="mdc-text-field">
-              <input type="text" id="my-text-field" class="mdc-text-field__input" pattern="[A-Za-z\s]+">
+              <input type="text" id="my-text-field" class="mdc-text-field__input" pattern="[A-Za-z\s]+" maxLength="30">
               <label class="mdc-floating-label" for="my-text-field">Please enter your name</label>
               <div class="mdc-line-ripple"></div>
             </div>
@@ -48,6 +48,10 @@
     <script>
         async function testWebShare() {
             console.log('share: clicked');
+            if (navigator.share === undefined) {
+              alert('You can share the url in the address bar');
+              return;
+            }
             try {
                 await navigator.share({
                     title: 'Title',
@@ -56,6 +60,7 @@
                 });
             } catch(error) {
                 console.log('share failed:',error);
+                alert('You can share the url in the address bar');
             }
         }
         function onLoad() {
