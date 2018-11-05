@@ -155,7 +155,6 @@ function draw() {
 		if(fireworks[i].done()) {
 			fireworks.splice(i, 1);
 		}
-		// console.log(fireworks.length);
 	}
 	var fps = frameRate();
 	fill(255);
@@ -163,14 +162,10 @@ function draw() {
 	text("FPS: " + fps.toFixed(2), 10, height - 10);
 }
 
-// function redirect() {
-// 	window.location.href = '/share.html';
-// }
 
 window.addEventListener('load', onLoad);
 
 function handleCreateClick() {
-	// alert('handlecreateclick: called');
 	createButton.style.display = "none";
 	shareButton.style.display = "none";
 	dialog.open();
@@ -198,15 +193,12 @@ function handleViewUrl() {
 }
 
 function addListeners(senderNameField, viewUrlButton) {
-	console.log(senderNameField);
-	console.log(senderNameField.input_);
 	senderNameField.input_.addEventListener('paste', function(evt) {
 	  evt.preventDefault();
 	});
 	senderNameField.input_.addEventListener('input', function(evt) {
 	  let x = evt.target.value;
 	  let code = x.charCodeAt(x.length -1);
-	  console.log(code);
 	  if ((code >= 65 && code <= 90) || (code >=97 && code <= 122) || code == 32 || x.length >= 30) {
 		window.senderNameText = evt.target.value;
 	  } else {
