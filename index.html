@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- this line removes any default padding and style. you might only need one of these values set. -->
     <style> body {padding: 0; margin: 0;} </style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112818171-3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-112818171-3');
+    </script>
   </head>
   <body>
     <div id="p5_loading" style="display: block; position: relative; width: 200px; top: 50%; left: 50%; transform: translate(-100px, -50%);">
@@ -48,14 +57,16 @@
     <script>
         async function testWebShare() {
             console.log('share: clicked');
+            console.log(window.senderNameText);
             if (navigator.share === undefined) {
               alert('You can share the url in the address bar');
               return;
             }
             try {
+                let senderName = localStorage.getItem('senderName');
                 await navigator.share({
-                    title: 'Title',
-                    text: 'Sample text',
+                    title: 'Diwali Greeting Card',
+                    text: `Happy Diwali from ${senderName}`,
                     url: window.location.href,
                 });
             } catch(error) {
