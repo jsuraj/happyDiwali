@@ -1,5 +1,5 @@
 var createButton, dialog, shareButton;
-var senderNameField, viewUrlButton;
+var senderNameField, viewUrlButton, closeButton;
 
 function getNameFromUrlVars() {
 	var vars = {};
@@ -179,11 +179,18 @@ function handleCreateClick() {
 	addListeners(senderNameField, viewUrlButton);
 }
 
+function handleCloseClick() {
+	dialog.close();
+	createButton.style.display = "block";
+	shareButton.style.display = "block";
+}
+
 function handleViewUrl() {
 	var rawInput = window.senderNameText.trim();
 	window.senderNameText = rawInput.split(' ').join('-');
 	window.createdUrl = `${window.location.origin}/?n=${window.senderNameText}`
 	localStorage.setItem('shareUrl', window.createdUrl);
+	localStorage.setItem('senderName', window.senderNameText);
 	dialog.close();
 	createButton.style.display = "block";
 	shareButton.style.display = "block";
@@ -226,6 +233,7 @@ function onLoad() {
 	dialog = new mdc.dialog.MDCDialog(document.querySelector('.mdc-dialog'));
 	createButton = document.querySelector('.create-button');
 	shareButton = document.querySelector('.share-button');
+	closeButton= document.querySelector('#close-button');
 
 	// document.querySelector('#share-redirect').addEventListener('click', redirect);
 	// document.querySelector('#share-redirect').addEventListener('touchstart', redirect);
@@ -234,4 +242,7 @@ function onLoad() {
 	createButton.addEventListener('click', handleCreateClick);
 	createButton.addEventListener('touchstart', handleCreateClick);
 
+	closeButton.addEventListener('click', handleCloseClick);
+	closeButton.addEventListener('touchstart', handleCloseClick);
+	closeButton.addEventListener('touchend', handleCloseClick);
 }
