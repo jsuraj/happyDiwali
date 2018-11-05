@@ -57,8 +57,6 @@
     <script>
         async function testWebShare() {
             gtag('event', 'share', { method : 'Google' });
-            console.log('share: clicked');
-            console.log(window.senderNameText);
             if (navigator.share === undefined) {
               alert('You can share the url in the address bar');
               return;
@@ -75,7 +73,6 @@
             }
         }
         function onLoad() {
-            console.log('onload');
             document.querySelector('#share-button').addEventListener('click', testWebShare);
             document.querySelector('#share-button').addEventListener('touchstart', testWebShare);
             document.querySelector('#share-button').addEventListener('touchend', testWebShare);
