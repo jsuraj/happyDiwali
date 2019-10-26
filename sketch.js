@@ -118,7 +118,8 @@ var senderName, from;
 function preload() {
 	rocketSound = loadSound("sounds/Bottle-Rocket.mp3");
 	explosionSound = loadSound("sounds/Explosion.mp3");
-	roboto = loadFont("fonts/Roboto/Roboto-Medium.ttf");
+	roboto = loadFont("fonts/Baloo_Bhaina/BalooBhaina-Regular.ttf");
+	cookie = loadFont("fonts/Cookie/Cookie-Regular.ttf");
 }
 
 function setup() {
@@ -139,12 +140,14 @@ function setup() {
 function draw() {
 	background(0, 25);
 	fill(211, 84, 0);
+	textFont(roboto)
     text('Wish you a very', windowWidth/2, windowHeight/4);
     textSize(35);
     text('HAPPY DIWALI', windowWidth/2, windowHeight/2);
     textSize(20);
     text(from, windowWidth/2, (windowHeight*5)/8);
-    textSize(30);
+	textSize(30);
+	textFont(cookie)
     text(senderName, windowWidth/2 , (windowHeight*6)/8);
 	if(random(1) < 0.03) {
 		fireworks.push(new Firework());
