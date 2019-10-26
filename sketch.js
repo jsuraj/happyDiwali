@@ -60,7 +60,8 @@ function Particle(x, y, col, firework) {
 }
 
 function Firework() {
-	this.firework = new Particle(random(width), height, color(255, 255, 255), true);
+	var col =  color(random(255), random(255), random(255));
+	this.firework = new Particle(random(width), height, col, true);
 	this.exploded = false;
 	this.particles = [];
 
@@ -83,7 +84,7 @@ function Firework() {
 	}
 
 	this.explode = function() {
-		var col =  color(random(255), random(255), random(255));
+		// var col =  color(random(255), random(255), random(255));
 		explosionSound.play();
 		for(var i=0 ;i<100 ;i++) {
 			var p = new Particle(this.firework.pos.x, this.firework.pos.y, col, false);
@@ -114,6 +115,7 @@ var gravity;
 var rocketSound, explosionSound;
 var roboto;
 var senderName, from;
+var finalWidth, finalHeight;
 
 function preload() {
 	rocketSound = loadSound("sounds/Bottle-Rocket.mp3");
@@ -124,7 +126,7 @@ function preload() {
 
 function setup() {
 	senderName = getNameFromUrlVars();
-	from = (senderName!== '') ? 'FROM' : '';
+	from = (senderName!== '') ? 'From:' : '';
 	createCanvas(windowWidth, windowHeight);							//windowWidth works over displayWidth
 	gravity = createVector(0, 0.2);
 	colorMode(RGB);
@@ -133,22 +135,30 @@ function setup() {
 	background(0);
 	textAlign(CENTER);
 	// textFont('Arial');
+	finalWidth = windowWidth;
+	finalHeight = windowHeight;
 	textFont(roboto);
 	// firework = new Particle(random(width), height);
 }
 
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight);
+  }
+
 function draw() {
 	background(0, 25);
+	drawLights();
 	fill(211, 84, 0);
 	textFont(roboto)
-    text('Wish you a very', windowWidth/2, windowHeight/4);
+    text('Wish you a very', finalWidth/2, finalHeight/4);
     textSize(35);
-    text('HAPPY DIWALI', windowWidth/2, windowHeight/2);
+    text('HAPPY DIWALI', finalWidth/2, finalHeight/2);
     textSize(20);
-    text(from, windowWidth/2, (windowHeight*5)/8);
+    text(from, finalWidth/2, (finalHeight*5)/8);
 	textSize(30);
-	textFont(cookie)
-    text(senderName, windowWidth/2 , (windowHeight*6)/8);
+	textFont(cookie);
+	fill(255, 215, 0);
+    text(senderName, finalWidth/2 , (finalHeight*6)/8);
 	if(random(1) < 0.03) {
 		fireworks.push(new Firework());
 	}
@@ -159,14 +169,58 @@ function draw() {
 			fireworks.splice(i, 1);
 		}
 	}
-	// var fps = frameRate();
+	var fps = frameRate();
 	fill(255);
 	stroke(0);
-	// text("FPS: " + fps.toFixed(2), 10, height - 10);
+	text("FPS: " + fps.toFixed(2), 10, height - 10);
 }
 
 
 window.addEventListener('load', onLoad);
+
+function drawLights() {
+	strokeWeight(1);
+	noFill();
+	stroke(254,216,177);
+	let x1 = 0,
+		x2 = windowWidth/6,
+		x3 = 2*windowWidth/6,
+		x4 = windowWidth/2;
+	let y1 = 0,
+		y2 = windowHeight/8,
+		y3 = windowHeight/8,
+		y4 = 0;
+	let a1 = windowWidth/2,
+		a2 = 4*windowWidth/6,
+		a3 = 5*windowWidth/6,
+		a4 = windowWidth;
+	let b1 = 0,
+		b2 = windowHeight/8,
+		b3 = windowHeight/8,
+		b4 = 0;		
+	bezier(x1, y1, x2, y2, x3, y3, x4, y4);
+	bezier(a1, b1, a2, b2, a3, b3, a4, b4);
+	let steps = 15;
+	for (let i = 0; i <= steps; i++) {
+		let t = i / steps;
+		let x = bezierPoint(x1, x2, x3, x4, t);
+		let y = bezierPoint(y1, y2, y3, y4, t);
+		let a = bezierPoint(a1, a2, a3, a4, t);
+		let b = bezierPoint(b1, b2, b3, b4, t);
+		stroke(255, 215, 0);
+		let val = random([0, 1]);
+		if(val == 1) {
+			fill(255, 215, 0);
+		} else {
+			fill(0, 0, 0);
+		}
+		ellipse(x, y, 5, 5);
+		ellipse(a, b, 5, 5);
+	}
+	// bezier(windowWidth/2, 0, 4*windowWidth/6, windowHeight/8, 5*windowWidth/6, windowHeight/8, windowWidth, 0);
+	// curve(5, 26, 5, 26, 73, 24, 73, 61);
+	noStroke();
+}
 
 function handleCreateClick() {
 	createButton.style.display = "none";

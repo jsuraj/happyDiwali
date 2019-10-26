@@ -1,3 +1,13 @@
+html, body { 
+    height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+canvas {
+    display: block;
+}
+
 .create-button {
     z-index: 20;
     width: 150px;
@@ -37,6 +47,7 @@
 
 .mdc-dialog__button {
     color: #ff6f00 !important;
+    border-color: #ff6f00 !important;
 }
 
 .mdc-line-ripple {
