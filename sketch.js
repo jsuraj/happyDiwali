@@ -142,6 +142,7 @@ function setup() {
 }
 
 function windowResized() {
+	setup();
 	resizeCanvas(windowWidth, windowHeight);
   }
 
@@ -169,10 +170,10 @@ function draw() {
 			fireworks.splice(i, 1);
 		}
 	}
-	var fps = frameRate();
+	// var fps = frameRate();
 	fill(255);
-	stroke(0);
-	text("FPS: " + fps.toFixed(2), 10, height - 10);
+	// stroke(0);
+	// text("FPS: " + fps.toFixed(2), 10, height - 10);
 }
 
 
