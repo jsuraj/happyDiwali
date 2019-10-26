@@ -138,6 +138,8 @@ function setup() {
 	finalWidth = windowWidth;
 	finalHeight = windowHeight;
 	textFont(roboto);
+	rocketSound.setVolume(0.05);
+	explosionSound.setVolume(0.05);
 	// firework = new Particle(random(width), height);
 }
 
